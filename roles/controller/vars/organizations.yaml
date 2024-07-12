@@ -1,5 +1,5 @@
 organizations:
-  - name: Event-Driven Ansible
-    desc: "Event-Driven Ansible"
-    creds: []
-    default: true
+  # - name: Event-Driven Ansible
+  #   desc: "Event-Driven Ansible"
+  #   creds: []
+  #   default: true

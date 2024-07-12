@@ -1,84 +1,11 @@
 jobtemplates:
-  - name: "[JT] Open Servicenow Incident"
-    org: "{{ default_organization | default('Default') }}"
-    inv: "Automation Controller Inventory"
-    project: "OCP Event-Driven Demo Project"
-    playbook: "playbooks/alertmanager_open_snow_incident.yaml"
-    creds:
-      - "ServiceNow Credential"
-    ask_variables_on_launch: true
-    allow_simultaneous: false
-    execution_environment: "Default execution environment"
-
-  - name: "[JT] Close Servicenow Incident"
-    org: "{{ default_organization | default('Default') }}"
-    inv: "Automation Controller Inventory"
-    project: "OCP Event-Driven Demo Project"
-    playbook: "playbooks/ansible_close_snow_incident.yaml"
-    creds:
-      - "ServiceNow Credential"
-    ask_variables_on_launch: true
-    allow_simultaneous: false
-    execution_environment: "Default execution environment"
-
-  - name: "[JT] Extend Physical Volume"
-    org: "{{ default_organization | default('Default') }}"
-    inv: "Automation Controller Inventory"
-    project: "OCP Event-Driven Demo Project"
-    playbook: "playbooks/extend_pvc.yaml"
-    creds:
-      - "Gitea Credential"
-      - "ArgoCD Credential"
-    ask_variables_on_launch: true
-    allow_simultaneous: false
-    execution_environment: "Default execution environment"
-
-  - name: "[JT] Backup Application"
-    org: "{{ default_organization | default('Default') }}"
-    inv: "Automation Controller Inventory"
-    project: "OCP Event-Driven Demo Project"
-    playbook: "playbooks/backup.yaml"
-    creds:
-      - "Gitea Credential"
-      - "Openshift Credential"
-    ask_variables_on_launch: true
-    allow_simultaneous: false
-    execution_environment: "Default execution environment"
-    extra_vars:
-      operation: backup
-
-  - name: "[JT] Restore Application"
-    org: "{{ default_organization | default('Default') }}"
-    inv: "Automation Controller Inventory"
-    project: "OCP Event-Driven Demo Project"
-    playbook: "playbooks/backup.yaml"
-    creds:
-      - "Gitea Credential"
-      - "Openshift Credential"
-    ask_variables_on_launch: true
-    allow_simultaneous: false
-    execution_environment: "Default execution environment"
-    extra_vars:
-      operation: restore
-
-  - name: "[JT] Set Alert to Acknowledge"
-    org: "{{ default_organization | default('Default') }}"
-    inv: "Automation Controller Inventory"
-    project: "OCP Event-Driven Demo Project"
-    playbook: "playbooks/silence_alarm.yaml"
-    creds:
-      - "Openshift Credential"
-    ask_variables_on_launch: true
-    allow_simultaneous: false
-    execution_environment: "Default execution environment"
-
-  - name: "[JT] Synchronize ArgoCD"
-    org: "{{ default_organization | default('Default') }}"
-    inv: "Automation Controller Inventory"
-    project: "OCP Event-Driven Demo Project"
-    playbook: "playbooks/synchronize_argocd.yaml"
-    creds:
-      - "Openshift Credential"
-    ask_variables_on_launch: true
-    allow_simultaneous: false
-    execution_environment: "Default execution environment"
+  # - name: "[JT] Open Servicenow Incident"
+  #   org: "{{ default_organization | default('Default') }}"
+  #   inv: "Automation Controller Inventory"
+  #   project: "OCP Event-Driven Demo Project"
+  #   playbook: "playbooks/alertmanager_open_snow_incident.yaml"
+  #   creds:
+  #     - "ServiceNow Credential"
+  #   ask_variables_on_launch: true
+  #   allow_simultaneous: false
+  #   execution_environment: "Default execution environment"
