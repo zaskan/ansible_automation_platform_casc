@@ -1,7 +1,7 @@
 ---
 - name: Include variables
   ansible.builtin.include_vars:
-    dir: vars
+    dir: "{{ controller_vars_dir }}"
 
 - name: Create AAP organizations
   ansible.controller.organization:
