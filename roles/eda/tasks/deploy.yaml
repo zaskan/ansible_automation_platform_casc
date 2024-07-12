@@ -1,7 +1,7 @@
 ---
 - name: Include variables
   ansible.builtin.include_vars:
-    dir: "{{ eda_vars_dir }}"
+    dir: "{{ eda_vars_dir | default('vars')}}"
 
 - name: Create EDA user token
   infra.eda_configuration.user_token:
@@ -10,7 +10,7 @@
     token: "{{ eda_casc_controller_token }}"
   loop: "{{ tokens }}"
   when:
-    - lookup('file', 'vars/tokens.yaml', errors='ignore') is not none
+    - lookup("file", "{{ controller_vars_dir }}/tokens.yaml", errors="ignore") is not none
 
 - name: Create Container Registry Credential
   infra.eda_configuration.credential:
@@ -22,7 +22,7 @@
     state: present
   loop: "{{ credentials }}"
   when:
-    - lookup('file', 'vars/credentials.yaml', errors='ignore') is not none
+    - lookup('file, "{{ controller_vars_dir }}/credentials.yaml", errors="ignore") is not none
 
 - name: Create Decision Environments
   infra.eda_configuration.decision_environment:
@@ -33,7 +33,7 @@
     state: present
   loop: "{{ decision_environments }}"
   when:
-    - lookup('file', 'vars/decision_environments.yaml', errors='ignore') is not none
+    - lookup("file", "{{ controller_vars_dir }}/decision_environments.yaml", errors="ignore") is not none
 
 - name: Create Projects
   infra.eda_configuration.project:
@@ -43,7 +43,7 @@
     state: present
   loop: "{{ projects }}"
   when:
-    - lookup('file', 'vars/projects.yaml', errors='ignore') is not none
+    - lookup("file", "{{ controller_vars_dir }}/projects.yaml", errors="ignore") is not none
 
 - name: Create Rulebook Activation
   infra.eda_configuration.rulebook_activation:
@@ -59,5 +59,4 @@
     restart_policy: always
   loop: "{{ activations }}"
   when:
-    - lookup('file', 'vars/activations.yaml', errors='ignore') is not none
-
+    - lookup("file", "{{ controller_vars_dir }}/activations.yaml", errors="ignore") is not none
