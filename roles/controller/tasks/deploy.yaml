@@ -3,21 +3,21 @@
   ansible.builtin.include_vars:
     dir: "{{ controller_vars_dir | default('vars')}}"
 
-- name: Create AAP organizations
+- name: Create Organizations
   ansible.controller.organization:
     name: "{{ item.name }}"
     description: "{{ item.desc }}"
     state: present
   loop: "{{ organizations }}"
   when:
-    - lookup("file", "{{ controller_vars_dir }}/organizations.yaml", errors="ignore") is not none
+    - lookup("file", "{{ controller_vars_dir }}/organizations.yaml", errors="ignore") is not none or organizations is defined
 
 - name: Set Default organization
   ansible.builtin.set_fact:
     default_organization: "{{ item.name }}"
   loop: "{{ organizations }}"
   when:
-    - lookup("file", "{{ controller_vars_dir }}/organizations.yaml", errors="ignore") is not none
+    - lookup("file", "{{ controller_vars_dir }}/organizations.yaml", errors="ignore") is not none or organizations is defined
     - item.default is defined
     - item.default is true
 
@@ -31,7 +31,7 @@
     client_type: "{{ item.client_type }}"
   loop: "{{ applications }}"
   when:
-    - lookup("file", "{{ controller_vars_dir }}/applications.yaml", errors="ignore") is not none
+    - lookup("file", "{{ controller_vars_dir }}/applications.yaml", errors="ignore") is not none or applications is defined
 
 - name: Create token
   ansible.controller.token:
@@ -42,13 +42,14 @@
   register: token
   loop: "{{ tokens }}"
   when:
-    - lookup("file", "{{ controller_vars_dir }}/applications.yaml", errors="ignore") is not none
+    - lookup("file", "{{ controller_vars_dir }}/applications.yaml", errors="ignore") is not none or tokens is defined
 
 - name: Register token
   ansible.builtin.set_fact:
     application_token: "{{ token.results.0.ansible_facts.controller_token.token }}"
+  when: token is defined
 
-- name: Create AAP teams
+- name: Create Teams
   ansible.controller.team:
     name: "{{ item.name }}"
     description: "{{ item.desc }}"
@@ -56,9 +57,9 @@
     state: present
   loop: "{{ teams }}"
   when:
-    - lookup("file", "{{ controller_vars_dir }}/teams.yml", errors="ignore") is not none
+    - lookup("file", "{{ controller_vars_dir }}/teams.yml", errors="ignore") is not none or teams is defined
 
-- name: Create AAP Users
+- name: Create Users
   ansible.controller.user:
     username: "{{ item.username }}"
     password: "{{ item.password }}"
@@ -69,9 +70,9 @@
     state: present
   loop: "{{ users }}"
   when:
-    - lookup("file", "{{ controller_vars_dir }}/users.yml", errors="ignore") is not none
+    - lookup("file", "{{ controller_vars_dir }}/users.yml", errors="ignore") is not none or users is defined
 
-- name: Create AAP Inventories
+- name: Create Inventories
   ansible.controller.inventory:
     name: "{{ item.name }}"
     description: "{{ item.desc }}"
@@ -80,7 +81,7 @@
     variables: "{{ item.vars | default('{}') }}"
   loop: "{{ inventories }}"
   when:
-    - lookup("file", "{{ controller_vars_dir }}/inventories.yaml", errors="ignore") is not none
+    - lookup("file", "{{ controller_vars_dir }}/inventories.yaml", errors="ignore") is not none or inventories is defined
 
 - name: Add hosts
   ansible.controller.host:
@@ -91,7 +92,7 @@
     state: present
   loop: "{{ inventory_hosts }}"
   when:
-    - lookup("file", "{{ controller_vars_dir }}/hosts.yaml", errors="ignore") is not none
+    - lookup("file", "{{ controller_vars_dir }}/hosts.yaml", errors="ignore") is not none or inventory_hosts is defined
 
 - name: Add Execution Enviroment
   ansible.controller.execution_environment:
@@ -100,7 +101,7 @@
     state: present
   loop: "{{ execution_enviroments }}"
   when:
-    - lookup("file", "{{ controller_vars_dir }}/execution_environments.yml", errors="ignore") is not none
+    - lookup("file", "{{ controller_vars_dir }}/execution_environments.yml", errors="ignore") is not none or execution_enviroments is defined
 
 - name: Create Custom Credential Types
   ansible.controller.credential_type:
@@ -111,7 +112,7 @@
     state: present
   loop: "{{ custom_credential_types }}"
   when:
-    - lookup("file", "{{ controller_vars_dir }}/credential_types.yaml", errors="ignore") is not none
+    - lookup("file", "{{ controller_vars_dir }}/credential_types.yaml", errors="ignore") is not none or custom_credential_types is defined
 
 - name: Create Credentials
   ansible.controller.credential:
@@ -124,7 +125,7 @@
     state: present
   loop: "{{ credentials }}"
   when:
-    - lookup("file", "{{ controller_vars_dir }}/credentials.yaml", errors="ignore") is not none
+    - lookup("file", "{{ controller_vars_dir }}/credentials.yaml", errors="ignore") is not none or credentials is defined
   no_log: false
 
 - name: Attach Galaxy Credentials to AAP organizations
@@ -135,7 +136,7 @@
     galaxy_credentials: "{{ item.creds | default(omit) }}"
   loop: "{{ organizations }}"
   when:
-    - lookup("file", "{{ controller_vars_dir }}/organizations.yml", errors="ignore") is not none
+    - lookup("file", "{{ controller_vars_dir }}/organizations.yml", errors="ignore") is not none or organizations is defined
 
 - name: Create Projects
   ansible.controller.project:
@@ -154,9 +155,9 @@
     wait: true
   loop: "{{ projects }}"
   when:
-    - lookup("file", "{{ controller_vars_dir }}/projects.yaml", errors="ignore") is not none
+    - lookup("file", "{{ controller_vars_dir }}/projects.yaml", errors="ignore") is not none or projects is defined
 
-- name: Create AAP Inventory Sources
+- name: Create Inventory Sources
   ansible.controller.inventory_source:
     name: "{{ item.name }}"
     description: "{{ item.desc }}"
@@ -170,9 +171,9 @@
     credential: "{{ item.credential | default(omit) }}"
   loop: "{{ inventory_sources }}"
   when:
-    - lookup("file", "{{ controller_vars_dir }}/inventory_sources.yml", errors="ignore") is not none
+    - lookup("file", "{{ controller_vars_dir }}/inventory_sources.yml", errors="ignore") is not none or inventory_sources is defined
 
-- name: Create AAP Job Templates
+- name: Create Job Templates
   ansible.controller.job_template:
     name: "{{ item.name }}"
     job_type: "run"
@@ -193,9 +194,9 @@
     state: present
   loop: "{{ jobtemplates }}"
   when:
-    - lookup("file", "{{ controller_vars_dir }}/job_templates.yaml", errors="ignore") is not none
+    - lookup("file", "{{ controller_vars_dir }}/job_templates.yaml", errors="ignore") is not none or jobtemplates is defined
 
-- name: Create AAP Workflow Job Templates
+- name: Create Workflow Job Templates
   ansible.controller.workflow_job_template:
     name: "{{ item.name }}"
     organization: "{{ item.org }}"
@@ -211,4 +212,4 @@
     state: present
   loop: "{{ workflowjobtemplates }}"
   when:
-    - lookup("file", "{{ controller_vars_dir }}/workflow_job_templates.yaml", errors="ignore") is not none
+    - lookup("file", "{{ controller_vars_dir }}/workflow_job_templates.yaml", errors="ignore") is not none or workflowjobtemplates is defined

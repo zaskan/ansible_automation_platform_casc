@@ -3,7 +3,7 @@
   ansible.builtin.include_vars:
     dir: "{{ eda_vars_dir | default('vars')}}"
 
-- name: Create EDA user token
+- name: Create User token
   infra.eda_configuration.user_token:
     name: "{{ item.name }}"
     description: "{{ item.description }}"
