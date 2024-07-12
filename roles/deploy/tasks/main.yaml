@@ -1,0 +1,73 @@
+- name: Create Namespaces
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: project.openshift.io/v1
+      kind: Project
+      metadata:
+        name: "{{ namespace.name }}"
+  loop: "{{ demoNamespaces }}"
+  loop_control:
+    loop_var: namespace
+
+- name: Install operators
+  include_tasks: install_operator.yaml
+  loop: "{{ operators }}"
+  loop_control:
+    loop_var: operator
+
+- name: Install ArgoCD
+  include_tasks: argocd.yaml
+
+- name: Create Environment on ArgoCD
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: argoproj.io/v1alpha1
+      kind: Application
+      metadata:
+        name: ocp-aap-environment
+        namespace: openshift-gitops
+        finalizers:
+          - resources-finalizer.argocd.argoproj.io
+      spec:
+        project: default
+        source:
+          repoURL: "{{ resources_url }}"
+          targetRevision: main
+          path: "{{ resources_path }}"
+          directory:
+            recurse: true
+        destination:
+          server: https://kubernetes.default.svc
+          namespace: openshift-gitops
+        syncPolicy:
+          automated:
+            prune: true
+            selfHeal: true
+
+- name: Get Argocd host
+  kubernetes.core.k8s_info:
+    api_version: v1
+    kind: Route
+    name: openshift-gitops-server
+    namespace: openshift-gitops
+  register: argocd_host
+
+- name: Get Argocd password
+  kubernetes.core.k8s_info:
+    api_version: v1
+    kind: Secret
+    name: openshift-gitops-cluster
+    namespace: openshift-gitops
+  register: argocd_password
+
+- name: Set Argocd Password
+  ansible.builtin.set_fact:
+    argocd_password: "{{ argocd_password.resources[0]['data']['admin.password'] | ansible.builtin.b64decode }}"
+
+- name: Set Argocd Host
+  ansible.builtin.set_fact:
+    argocd_hostname: "{{ argocd_host.resources[0]['spec']['host'] }}"
+
+
