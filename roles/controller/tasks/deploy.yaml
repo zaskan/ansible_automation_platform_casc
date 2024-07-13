@@ -57,7 +57,7 @@
     state: present
   loop: "{{ teams }}"
   when:
-    - lookup("file", "{{ controller_vars_dir }}/teams.yml", errors="ignore") is not none or teams is defined
+    - lookup("file", "{{ controller_vars_dir }}/teams.yaml", errors="ignore") is not none or teams is defined
 
 - name: Create Users
   ansible.controller.user:
@@ -70,7 +70,7 @@
     state: present
   loop: "{{ users }}"
   when:
-    - lookup("file", "{{ controller_vars_dir }}/users.yml", errors="ignore") is not none or users is defined
+    - lookup("file", "{{ controller_vars_dir }}/users.yaml", errors="ignore") is not none or users is defined
 
 - name: Create Inventories
   ansible.controller.inventory:
@@ -82,6 +82,21 @@
   loop: "{{ inventories }}"
   when:
     - lookup("file", "{{ controller_vars_dir }}/inventories.yaml", errors="ignore") is not none or inventories is defined
+
+- name: Create AAP Inventory Sources
+  ansible.controller.inventory_source:
+    name: "{{ item.name }}"
+    description: "{{ item.desc }}"
+    organization: "{{ item.org }}"
+    state: present
+    inventory: "{{ item.inventory }}"
+    source: "{{ item.source }}"
+    source_path: "{{ item.source_path }}"
+    source_project: "{{ item.project }}"
+    credential: "{{ item.credential }}"
+  loop: "{{ inventory_sources }}"
+  when:
+    - lookup("file", "{{ controller_vars_dir }}/inventory_sources.yaml", errors="ignore") is not none or inventory_sources is defined
 
 - name: Add hosts
   ansible.controller.host:
@@ -101,7 +116,7 @@
     state: present
   loop: "{{ execution_enviroments }}"
   when:
-    - lookup("file", "{{ controller_vars_dir }}/execution_environments.yml", errors="ignore") is not none or execution_enviroments is defined
+    - lookup("file", "{{ controller_vars_dir }}/execution_environments.yaml", errors="ignore") is not none or execution_enviroments is defined
 
 - name: Create Custom Credential Types
   ansible.controller.credential_type:
@@ -136,7 +151,7 @@
     galaxy_credentials: "{{ item.creds | default(omit) }}"
   loop: "{{ organizations }}"
   when:
-    - lookup("file", "{{ controller_vars_dir }}/organizations.yml", errors="ignore") is not none or organizations is defined
+    - lookup("file", "{{ controller_vars_dir }}/organizations.yaml", errors="ignore") is not none or organizations is defined
 
 - name: Create Projects
   ansible.controller.project:
@@ -171,7 +186,7 @@
     credential: "{{ item.credential | default(omit) }}"
   loop: "{{ inventory_sources }}"
   when:
-    - lookup("file", "{{ controller_vars_dir }}/inventory_sources.yml", errors="ignore") is not none or inventory_sources is defined
+    - lookup("file", "{{ controller_vars_dir }}/inventory_sources.yaml", errors="ignore") is not none or inventory_sources is defined
 
 - name: Create Job Templates
   ansible.controller.job_template:
