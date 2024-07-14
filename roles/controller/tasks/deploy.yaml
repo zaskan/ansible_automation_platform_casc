@@ -84,6 +84,8 @@
   when:
     - credential_types is defined
 
+- debug: msg="{{ credentials }}"
+
 - name: Create Credentials
   ansible.controller.credential:
     name: "{{ item.name }}"
