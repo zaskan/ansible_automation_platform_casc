@@ -73,6 +73,31 @@
   when:
     - lookup("file", "{{ controller_vars_dir }}/users.yaml", errors="ignore") is not none or users is defined
 
+- name: Create Custom Credential Types
+  ansible.controller.credential_type:
+    name: "{{ item.name }}"
+    kind: "{{ item.kind }}"
+    inputs: "{{ item.inputs }}"
+    injectors: "{{ item.injectors }}"
+    state: present
+  loop: "{{ custom_credential_types }}"
+  when:
+    - lookup("file", "{{ controller_vars_dir }}/credential_types.yaml", errors="ignore") is not none or custom_credential_types is defined
+
+- name: Create Credentials
+  ansible.controller.credential:
+    name: "{{ item.name }}"
+    description: "{{ item.desc }}"
+    organization: "{{ item.org }}"
+    credential_type: "{{ item.type }}"
+    update_secrets: true
+    inputs: "{{ item.inputs }}"
+    state: present
+  loop: "{{ credentials }}"
+  when:
+    - lookup("file", "{{ controller_vars_dir }}/credentials.yaml", errors="ignore") is not none or credentials is defined
+  no_log: false
+
 - name: Create Inventories
   ansible.controller.inventory:
     name: "{{ item.name }}"
@@ -118,31 +143,6 @@
   loop: "{{ execution_enviroments }}"
   when:
     - lookup("file", "{{ controller_vars_dir }}/execution_environments.yaml", errors="ignore") is not none or execution_enviroments is defined
-
-- name: Create Custom Credential Types
-  ansible.controller.credential_type:
-    name: "{{ item.name }}"
-    kind: "{{ item.kind }}"
-    inputs: "{{ item.inputs }}"
-    injectors: "{{ item.injectors }}"
-    state: present
-  loop: "{{ custom_credential_types }}"
-  when:
-    - lookup("file", "{{ controller_vars_dir }}/credential_types.yaml", errors="ignore") is not none or custom_credential_types is defined
-
-- name: Create Credentials
-  ansible.controller.credential:
-    name: "{{ item.name }}"
-    description: "{{ item.desc }}"
-    organization: "{{ item.org }}"
-    credential_type: "{{ item.type }}"
-    update_secrets: true
-    inputs: "{{ item.inputs }}"
-    state: present
-  loop: "{{ credentials }}"
-  when:
-    - lookup("file", "{{ controller_vars_dir }}/credentials.yaml", errors="ignore") is not none or credentials is defined
-  no_log: false
 
 - name: Attach Galaxy Credentials to AAP organizations
   ansible.controller.organization:
