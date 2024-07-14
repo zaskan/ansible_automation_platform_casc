@@ -10,14 +10,16 @@
     state: present
   loop: "{{ organizations }}"
   when:
-    - lookup("file", "{{ controller_vars_dir }}/organizations.yaml", errors="ignore") is not none or organizations is defined
+    - lookup('file', controller_vars_dir + '/organizations.yaml', errors='ignore') is not none
+    - organizations is defined
 
 - name: Set Default organization
   ansible.builtin.set_fact:
     default_organization: "{{ item.name }}"
   loop: "{{ organizations }}"
   when:
-    - lookup("file", "{{ controller_vars_dir }}/organizations.yaml", errors="ignore") is not none or organizations is defined
+    - lookup('file', controller_vars_dir + '/organizations.yaml', errors='ignore') is not none
+    - organizations is defined
     - item.default is defined
     - item.default is true
 
@@ -31,7 +33,8 @@
     client_type: "{{ item.client_type }}"
   loop: "{{ applications }}"
   when:
-    - lookup("file", "{{ controller_vars_dir }}/applications.yaml", errors="ignore") is not none or applications is defined
+    - lookup('file', controller_vars_dir + '/applications.yaml', errors='ignore') is not none
+    - applications is defined
 
 - name: Create token
   ansible.controller.token:
