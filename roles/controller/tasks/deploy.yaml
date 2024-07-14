@@ -80,7 +80,7 @@
     inputs: "{{ item.inputs }}"
     injectors: "{{ item.injectors }}"
     state: present
-  loop: "{{ custom_credential_types }}"
+  loop: "{{ credential_types }}"
   when:
     - credential_types is defined
 
