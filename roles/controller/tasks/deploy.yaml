@@ -96,7 +96,6 @@
   loop: "{{ credentials }}"
   when:
     - credentials is defined
-  no_log: true
 
 - name: Create Inventories
   ansible.controller.inventory:
