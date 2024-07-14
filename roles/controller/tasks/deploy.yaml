@@ -47,7 +47,8 @@
 - name: Register token
   ansible.builtin.set_fact:
     application_token: "{{ token.results.0.ansible_facts.controller_token.token }}"
-  when: token is defined
+  when: 
+    - lookup("file", "{{ controller_vars_dir }}/applications.yaml", errors="ignore") is not none or tokens is defined
 
 - name: Create Teams
   ansible.controller.team:
