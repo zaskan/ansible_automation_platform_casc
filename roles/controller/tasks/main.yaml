@@ -1,5 +1,6 @@
 - name: Prepare Controller Objects
   ansible.builtin.include_tasks: prepare.yaml
+  when: installation_type == ocp
 
 - name: Deploy Controller Objects
   ansible.builtin.include_tasks:
