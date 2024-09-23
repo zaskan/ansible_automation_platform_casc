@@ -7,7 +7,7 @@
     file: deploy.yaml
     apply:
       environment:
-        CONTROLLER_HOST: "{{ hostvars['localhost']['aap_host'] }}"
-        CONTROLLER_USERNAME: "admin"
-        CONTROLLER_PASSWORD: "{{ hostvars['localhost']['aap_pass'] }}"
+        CONTROLLER_HOST: "{{ controller_host }}"
+        CONTROLLER_USERNAME: "{{ controller_username }}"
+        CONTROLLER_PASSWORD: "{{ controller_password }}"
         CONTROLLER_VERIFY_SSL: "false"
