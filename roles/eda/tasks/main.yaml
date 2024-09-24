@@ -1,6 +1,6 @@
 - name: Prepare EDA Objects
   ansible.builtin.include_tasks: prepare.yaml
-    when: installation_type is defined and installation_type == "ocp"
+  when: installation_type is defined and installation_type == "ocp"
 
 - name: Deploy EDA Objects
   ansible.builtin.include_tasks:
