@@ -8,7 +8,7 @@
   infra.eda_configuration.user_token:
     name: "{{ item.name }}"
     description: "{{ item.description }}"
-    token: "{{ controller_token }}"
+    token: "{{ generated_controller_token }}"
   loop: "{{ eda_tokens }}"
   when:
     - eda_tokens is defined

@@ -40,7 +40,7 @@
     scope: "{{ item.scope }}"
     state: present
     application: "{{ item.application }}"
-  register: controller_token
+  register: generated_controller_token
   loop: "{{ controller_tokens }}"
   when:
     - controller_tokens is defined
