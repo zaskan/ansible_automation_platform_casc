@@ -94,9 +94,9 @@
     update_secrets: true
     inputs: "{{ item.inputs }}"
     state: present
-  loop: "{{ credentials }}"
+  loop: "{{ controller_credentials }}"
   when:
-    - credentials is defined
+    - controller_credentials is defined
 
 - name: Create Inventories
   ansible.controller.inventory:
