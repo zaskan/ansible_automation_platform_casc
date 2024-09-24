@@ -170,7 +170,7 @@
     wait: true
   loop: "{{ controller_projects }}"
   when:
-    - projects is defined
+    - controller_projects is defined
 
 - name: Create Inventory Sources
   ansible.controller.inventory_source:
