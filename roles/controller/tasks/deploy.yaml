@@ -2,7 +2,6 @@
 - name: Include controller variables
   ansible.builtin.include_vars:
     file: "{{ item }}"
-    name: "{{ item }}"
   loop: "{{ lookup('fileglob', controller_vars_dir, wantlist=True) }}"
 
 - name: Create Organizations
