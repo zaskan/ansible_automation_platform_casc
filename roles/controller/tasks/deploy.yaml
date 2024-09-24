@@ -2,6 +2,9 @@
 - name: Include variables
   ansible.builtin.include_vars:
     dir: "{{ controller_vars_dir | default('vars')}}"
+    name: casc_vars
+
+- debug: msg="{{ casc_vars }}"
 
 - name: Create Organizations
   ansible.controller.organization:
