@@ -1,8 +1,8 @@
 ---
 - name: Include controller variables
   ansible.builtin.include_vars:
-    dir: "{{ controller_vars_dir | default('vars')}}"
-    name: casc_vars
+    file: "{{ item }}"
+  loop: "{{ lookup('fileglob', controller_vars_dir, wantlist=True) }}"
 
 - name: Create Organizations
   ansible.controller.organization:
