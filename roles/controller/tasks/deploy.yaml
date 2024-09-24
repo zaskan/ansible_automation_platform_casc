@@ -216,7 +216,7 @@
   ansible.controller.workflow_job_template:
     name: "{{ item.name }}"
     organization: "{{ item.org }}"
-    inventory: "{{ item.inv }}"
+    inventory: "{{ item.inv | default(omit)}}"
     ask_limit_on_launch: "{{ item.ask_limit_on_launch }}"
     ask_variables_on_launch: "{{ item.ask_variables_on_launch }}"
     allow_simultaneous: "{{ item.allow_simultaneous }}"
