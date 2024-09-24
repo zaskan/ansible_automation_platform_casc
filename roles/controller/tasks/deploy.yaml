@@ -130,6 +130,7 @@
     description: "{{ item.desc }}"
     inventory: "{{ item.inv }}"
     variables: "{{ item.vars }}"
+    enabled: true
     state: present
   loop: "{{ inventory_hosts }}"
   when:
