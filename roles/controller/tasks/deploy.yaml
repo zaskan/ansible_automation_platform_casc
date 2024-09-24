@@ -80,9 +80,9 @@
     inputs: "{{ item.inputs }}"
     injectors: "{{ item.injectors }}"
     state: present
-  loop: "{{ credential_types }}"
+  loop: "{{ custom_credential_types }}"
   when:
-    - credential_types is defined
+    - custom_credential_types is defined
 
 - name: Create Credentials
   ansible.controller.credential:
