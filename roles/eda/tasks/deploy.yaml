@@ -4,7 +4,6 @@
     file: "{{ item }}"
   loop: "{{ lookup('fileglob', eda_vars_dir, wantlist=True) }}"
 
-
 - name: Create User token
   infra.eda_configuration.user_token:
     name: "{{ item.name }}"
@@ -12,7 +11,7 @@
     token: "{{ controller_token }}"
   loop: "{{ eda_tokens }}"
   when:
-    - lookup("file", "{{ eda_vars_dir }}/eda_tokens.yaml", errors="ignore") is not none
+    - eda_tokens is defined
 
 - name: Create Container Registry Credential
   infra.eda_configuration.credential:
@@ -24,7 +23,7 @@
     state: present
   loop: "{{ eda_credentials }}"
   when:
-    - lookup('file, "{{ eda_vars_dir }}/eda_credentials.yaml", errors="ignore") is not none
+    - eda_credentials is defined
 
 - name: Create Decision Environments
   infra.eda_configuration.decision_environment:
@@ -35,7 +34,7 @@
     state: present
   loop: "{{ decision_environments }}"
   when:
-    - lookup("file", "{{ eda_vars_dir }}/decision_environments.yaml", errors="ignore") is not none
+    - decision_environments is defined
 
 - name: Create Projects
   infra.eda_configuration.project:
@@ -45,7 +44,7 @@
     state: present
   loop: "{{ eda_projects }}"
   when:
-    - lookup("file", "{{ eda_vars_dir }}/eda_projects.yaml", errors="ignore") is not none
+    - eda_projects is defined
 
 - name: Create Rulebook Activation
   infra.eda_configuration.rulebook_activation:
@@ -61,4 +60,4 @@
     restart_policy: always
   loop: "{{ activations }}"
   when:
-    - lookup("file", "{{ eda_vars_dir }}/activations.yaml", errors="ignore") is not none
+    - activations is defined
