@@ -41,9 +41,9 @@
     description: "{{ item.description }}"
     url: "{{ item.url }}"
     state: present
-  loop: "{{ projects }}"
+  loop: "{{ eda_projects }}"
   when:
-    - lookup("file", "{{ controller_vars_dir }}/projects.yaml", errors="ignore") is not none
+    - lookup("file", "{{ controller_vars_dir }}/eda_projects.yaml", errors="ignore") is not none
 
 - name: Create Rulebook Activation
   infra.eda_configuration.rulebook_activation:
