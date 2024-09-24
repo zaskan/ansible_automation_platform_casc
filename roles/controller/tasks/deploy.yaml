@@ -47,9 +47,9 @@
 
 - name: Register token
   ansible.builtin.set_fact:
-    application_token: "{{ controller_token.results.0.ansible_facts.controller_token.token }}"
+    application_token: "{{ generated_controller_token.results.0.ansible_facts.controller_token.token }}"
   when: 
-    - controller_tokens is defined
+    - generated_controller_token is defined
 
 - name: Create Teams
   ansible.controller.team:
