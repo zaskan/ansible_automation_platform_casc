@@ -4,8 +4,6 @@
     dir: "{{ controller_vars_dir | default('vars')}}"
     name: casc_vars
 
-- debug: msg:"{{ casc_vars }}"
-
 - name: Create Organizations
   ansible.controller.organization:
     name: "{{ item.name }}"
