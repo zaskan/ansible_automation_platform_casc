@@ -48,7 +48,7 @@
   ansible.builtin.set_fact:
     application_token: "{{ controller_token.results.0.ansible_facts.controller_token.token }}"
   when: 
-    - tokens is defined
+    - controller_tokens is defined
 
 - name: Create Teams
   ansible.controller.team:
