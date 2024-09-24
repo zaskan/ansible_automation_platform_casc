@@ -9,10 +9,10 @@
   infra.eda_configuration.user_token:
     name: "{{ item.name }}"
     description: "{{ item.description }}"
-    token: "{{ eda_casc_controller_token }}"
-  loop: "{{ tokens }}"
+    token: "{{ controller_token }}"
+  loop: "{{ eda_tokens }}"
   when:
-    - lookup("file", "{{ eda_vars_dir }}/tokens.yaml", errors="ignore") is not none
+    - lookup("file", "{{ eda_vars_dir }}/eda_tokens.yaml", errors="ignore") is not none
 
 - name: Create Container Registry Credential
   infra.eda_configuration.credential:
