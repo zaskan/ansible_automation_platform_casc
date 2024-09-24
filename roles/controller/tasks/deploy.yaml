@@ -33,6 +33,8 @@
   when:
     - applications is defined
 
+- debug: msg="{{ tokens }}"
+
 - name: Create token
   ansible.controller.token:
     description: "{{ item.description }}"
