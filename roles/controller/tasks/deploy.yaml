@@ -33,22 +33,20 @@
   when:
     - applications is defined
 
-- debug: msg="{{ tokens }}"
-
 - name: Create token
   ansible.controller.token:
     description: "{{ item.description }}"
     scope: "{{ item.scope }}"
     state: present
     application: "{{ item.application }}"
-  register: token
-  loop: "{{ tokens }}"
+  register: controller_token
+  loop: "{{ controller_tokens }}"
   when:
-    - tokens is defined
+    - controller_tokens is defined
 
 - name: Register token
   ansible.builtin.set_fact:
-    application_token: "{{ token.results.0.ansible_facts.controller_token.token }}"
+    application_token: "{{ controller_token.results.0.ansible_facts.controller_token.token }}"
   when: 
     - tokens is defined
 
@@ -172,7 +170,7 @@
     state: present
     update_project: true
     wait: true
-  loop: "{{ projects }}"
+  loop: "{{ controller_projects }}"
   when:
     - projects is defined
 
