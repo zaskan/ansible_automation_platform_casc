@@ -39,7 +39,6 @@
     description: "{{ item.description }}"
     scope: "{{ item.scope }}"
     state: present
-    organization: "{{ item.organization }}"
     application: "{{ item.application }}"
   register: generated_controller_token
   loop: "{{ controller_tokens }}"
