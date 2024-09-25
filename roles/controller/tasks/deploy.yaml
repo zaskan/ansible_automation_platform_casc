@@ -78,17 +78,17 @@
 - name: Configure controller access RBAC for users
   ansible.controller.role:
     user: "{{ item.username }}"
-    role: >-
+    role:>-
       {% if item.superuser == 'false' and item.auditor == 'false' %}
-     member
+      member
       {% elif item.superuser == 'true' and item.auditor == 'false' %}
-     admin
+      admin
       {% elif item.superuser == 'true' and item.auditor == 'true' %}
-     admin
+      admin
       {% elif item.superuser == 'false' and item.auditor == 'true' %}
-     auditor
+      auditor
       {% else %}
-     member
+      member
       {% endif %}
     organization: "{{ item.organization }}"
     state: present
