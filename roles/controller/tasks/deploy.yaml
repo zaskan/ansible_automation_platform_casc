@@ -87,6 +87,8 @@
         admin
       {% elif item.superuser == 'false' and item.auditor == 'true' %}
         auditor
+      {% else %}
+        member
       {% endif %}
     organization: "{{ item.organization }}"
     state: present
