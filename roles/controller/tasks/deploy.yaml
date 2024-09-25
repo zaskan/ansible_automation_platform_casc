@@ -96,6 +96,22 @@
   when:
     - users is defined
 
+- name: Configure controller access RBAC for users
+  ansible.controller.role:
+    user: "{{ item.username }}"
+    user: "{{ user.username }}"
+    role: "{{ role_entry.role }}"
+    organization: "{{ role_entry.organization | default(omit) }}"
+    team: "{{ role_entry.team | default(omit) }}"
+    project: "{{ role_entry.project | default(omit) }}"
+    inventory: "{{ role_entry.inventory | default(omit) }}"
+    credential: "{{ role_entry.credential | default(omit) }}"
+    workflow: "{{ role_entry.workflow | default(omit) }}"
+    job_template: "{{ role_entry.job_template | default(omit) }}"
+  loop: "{{ users | subelements('roles') }}"
+  loop_control:
+    label: "Assigning {{ role_entry.role }} to {{ item.username }} on {{ role_entry | dict2items() | selectattr('value', 'defined') | list | first }}"
+
 - name: Create Custom Credential Types
   ansible.controller.credential_type:
     name: "{{ item.name }}"
