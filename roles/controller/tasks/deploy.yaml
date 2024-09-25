@@ -89,7 +89,7 @@
       auditor
       {%- else -%}
       member
-      {% endif %}
+      {%- endif -%}
     organization: "{{ item.organization }}"
     state: present
   loop: "{{ users }}"
