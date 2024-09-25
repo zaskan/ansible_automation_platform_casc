@@ -79,7 +79,7 @@
   ansible.controller.role:
     user: "{{ item.username }}"
     role: member
-    organization: "{{ item }}.organization"
+    organization: "{{ item.organization }}"
     state: present
   loop: "{{ users }}"
   when:
