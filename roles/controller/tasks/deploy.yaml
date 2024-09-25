@@ -75,45 +75,6 @@
   when:
     - users is defined
 
-- name: Configure controller access RBAC for users
-  ansible.controller.role:
-    user: "{{ item.username }}"
-    role: >-
-      {%- if item.superuser == false and item.auditor == false -%}
-      member
-      {%- elif item.superuser == true and item.auditor == false -%}
-      admin
-      {%- elif item.superuser == true and item.auditor == true -%}
-      admin
-      {%- elif item.superuser == false and item.auditor == true -%}
-      auditor
-      {%- else -%}
-      member
-      {%- endif -%}
-    organization: "{{ item.organization }}"
-    state: present
-  loop: "{{ users }}"
-  when:
-    - users is defined
-
-- name: Configure controller access RBAC for users
-  vars:
-    user: "{{ item.0 }}"
-    role_entry: "{{ item.1 }}"
-  ansible.controller.role:
-    user: "{{ user.username }}"
-    role: "{{ role_entry.role }}"
-    organization: "{{ role_entry.organization | default(omit) }}"
-    team: "{{ role_entry.team | default(omit) }}"
-    project: "{{ role_entry.project | default(omit) }}"
-    inventory: "{{ role_entry.inventory | default(omit) }}"
-    credential: "{{ role_entry.credential | default(omit) }}"
-    workflow: "{{ role_entry.workflow | default(omit) }}"
-    job_template: "{{ role_entry.job_template | default(omit) }}"
-  loop: "{{ users | subelements('roles') }}"
-  loop_control:
-    label: "Assigning {{ role_entry.role }} to {{ user.username }} on {{ role_entry | dict2items() | selectattr('value', 'defined') | list | first }}"
-
 - name: Create Custom Credential Types
   ansible.controller.credential_type:
     name: "{{ item.name }}"
@@ -270,3 +231,42 @@
   loop: "{{ workflowjobtemplates }}"
   when:
     - workflowjobtemplates is defined
+
+- name: Configure controller access RBAC for users
+  ansible.controller.role:
+    user: "{{ item.username }}"
+    role: >-
+      {%- if item.superuser == false and item.auditor == false -%}
+      member
+      {%- elif item.superuser == true and item.auditor == false -%}
+      admin
+      {%- elif item.superuser == true and item.auditor == true -%}
+      admin
+      {%- elif item.superuser == false and item.auditor == true -%}
+      auditor
+      {%- else -%}
+      member
+      {%- endif -%}
+    organization: "{{ item.organization }}"
+    state: present
+  loop: "{{ users }}"
+  when:
+    - users is defined
+
+- name: Configure controller access RBAC for users
+  vars:
+    user: "{{ item.0 }}"
+    role_entry: "{{ item.1 }}"
+  ansible.controller.role:
+    user: "{{ user.username }}"
+    role: "{{ role_entry.role }}"
+    organization: "{{ role_entry.organization | default(omit) }}"
+    team: "{{ role_entry.team | default(omit) }}"
+    project: "{{ role_entry.project | default(omit) }}"
+    inventory: "{{ role_entry.inventory | default(omit) }}"
+    credential: "{{ role_entry.credential | default(omit) }}"
+    workflow: "{{ role_entry.workflow | default(omit) }}"
+    job_template: "{{ role_entry.job_template | default(omit) }}"
+  loop: "{{ users | subelements('roles') }}"
+  loop_control:
+    label: "Assigning {{ role_entry.role }} to {{ user.username }} on {{ role_entry | dict2items() | selectattr('value', 'defined') | list | first }}"
