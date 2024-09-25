@@ -63,7 +63,5 @@
     state: present
     restart_policy: always
   loop: "{{ activations }}"
-  register: activation_status
   when:
     - activations is defined
-  until: activation_status.activations[0] is defined and activation_status.activations[0].status == "running"
