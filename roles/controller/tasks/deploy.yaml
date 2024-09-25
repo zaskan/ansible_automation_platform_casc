@@ -75,16 +75,38 @@
   when:
     - users is defined
 
-- name: Configure RBAC
+- name: Configure controller access RBAC for users
   ansible.controller.role:
     user: "{{ item.username }}"
-    role: member
+    role: >-
+      {% if item.superuser == 'false' and item.auditor == 'false' %}
+        member
+      {% elif item.superuser == 'true' and item.auditor == 'false' %}
+        admin
+      {% elif item.superuser == 'true' and item.auditor == 'true' %}
+        admin
+      {% elif item.superuser == 'false' and item.auditor == 'true' %}
+        auditor
+      {% endif %}
     organization: "{{ item.organization }}"
     state: present
   loop: "{{ users }}"
   when:
     - users is defined
 
+- name: Configure controller objects RBAC for users
+  ansible.controller.role:
+    user: "{{ item.0.username }}"
+    role: use
+    credentials: "{{ item.1.credentials | default(omit) }}"
+    inventories: "{{ item.1.inventories | default(omit) }}"
+    projects: "{{ item.1.projects | default(omit) }}"
+    job_templates: "{{ item.1.job_templates | default(omit) }}"
+    workflows: "{{ item.1.workflows | default(omit) }}"
+  loop: "{{ users | product(users.roles) | list }}"
+  when:
+    - users is defined
+    
 - name: Create Custom Credential Types
   ansible.controller.credential_type:
     name: "{{ item.name }}"
