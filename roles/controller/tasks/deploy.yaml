@@ -96,19 +96,6 @@
   when:
     - users is defined
 
-- name: Configure controller objects RBAC for users
-  ansible.controller.role:
-    user: "{{ item.0.username }}"
-    role: use
-    credentials: "{{ item.1.credentials | default(omit) }}"
-    inventories: "{{ item.1.inventories | default(omit) }}"
-    projects: "{{ item.1.projects | default(omit) }}"
-    job_templates: "{{ item.1.job_templates | default(omit) }}"
-    workflows: "{{ item.1.workflows | default(omit) }}"
-  loop: "{{ users | product(item.roles) | list }}"
-  when:
-    - users is defined
-    
 - name: Create Custom Credential Types
   ansible.controller.credential_type:
     name: "{{ item.name }}"
