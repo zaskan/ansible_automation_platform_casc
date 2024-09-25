@@ -79,15 +79,15 @@
   ansible.controller.role:
     user: "{{ item.username }}"
     role: >-
-      {% if item.superuser == 'false' and item.auditor == 'false' %}
+      {%- if item.superuser == 'false' and item.auditor == 'false' -%}
       member
-      {% elif item.superuser == 'true' and item.auditor == 'false' %}
+      {%- elif item.superuser == 'true' and item.auditor == 'false' -%}
       admin
-      {% elif item.superuser == 'true' and item.auditor == 'true' %}
+      {%- elif item.superuser == 'true' and item.auditor == 'true' -%}
       admin
-      {% elif item.superuser == 'false' and item.auditor == 'true' %}
+      {%- elif item.superuser == 'false' and item.auditor == 'true' -%}
       auditor
-      {% else %}
+      {%- else -%}
       member
       {% endif %}
     organization: "{{ item.organization }}"
