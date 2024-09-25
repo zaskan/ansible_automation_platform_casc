@@ -99,7 +99,6 @@
 - name: Configure controller access RBAC for users
   ansible.controller.role:
     user: "{{ item.username }}"
-    user: "{{ user.username }}"
     role: "{{ role_entry.role }}"
     organization: "{{ role_entry.organization | default(omit) }}"
     team: "{{ role_entry.team | default(omit) }}"
