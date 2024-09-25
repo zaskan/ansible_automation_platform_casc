@@ -105,7 +105,7 @@
     projects: "{{ item.1.projects | default(omit) }}"
     job_templates: "{{ item.1.job_templates | default(omit) }}"
     workflows: "{{ item.1.workflows | default(omit) }}"
-  loop: "{{ users | product(users.roles) | list }}"
+  loop: "{{ users | product(item.roles) | list }}"
   when:
     - users is defined
     
