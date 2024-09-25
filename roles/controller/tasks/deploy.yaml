@@ -39,6 +39,7 @@
     description: "{{ item.description }}"
     scope: "{{ item.scope }}"
     state: present
+    organization: "{{ item.organization }}"
     application: "{{ item.application }}"
   register: generated_controller_token
   loop: "{{ controller_tokens }}"
@@ -66,9 +67,10 @@
     username: "{{ item.username }}"
     password: "{{ item.password }}"
     email: "{{ item.email }}"
-    update_secrets: false
-    superuser: "{{ super_user }}"
-    auditor: "{{ auditor_user }}"
+    update_secrets: "{{ item.update_secrets }}"
+    superuser: "{{ item.superuser }}"
+    auditor: "{{ item.auditor }}"
+    organization: "{{ item.organization }}"
     state: present
   loop: "{{ users }}"
   when:
