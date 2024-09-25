@@ -75,6 +75,16 @@
   when:
     - users is defined
 
+- name: Configure RBAC
+  ansible.controller.role:
+    user: "{{ item.username }}"
+    role: member
+    organization: "{{ item }}.organization"
+    state: present
+  loop: "{{ users }}"
+  when:
+    - users is defined
+
 - name: Create Custom Credential Types
   ansible.controller.credential_type:
     name: "{{ item.name }}"
