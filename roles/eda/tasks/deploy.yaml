@@ -45,8 +45,10 @@
     url: "{{ item.url }}"
     state: present
   loop: "{{ eda_projects }}"
+  register: project_status
   when:
     - eda_projects is defined
+  until: project_status != ""
 
 - name: Create Rulebook Activation
   infra.eda_configuration.rulebook_activation:
@@ -61,5 +63,7 @@
     state: present
     restart_policy: always
   loop: "{{ activations }}"
+  register: activation_status
   when:
     - activations is defined
+  until: activation_status.activations[0] is defined and activation_status.activations[0].status == "running"
