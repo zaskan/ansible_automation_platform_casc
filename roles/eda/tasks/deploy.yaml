@@ -65,3 +65,13 @@
   loop: "{{ activations }}"
   when:
     - activations is defined
+
+- name: Create eda users
+  infra.eda_configuration.user:
+    username: "{{ item.user }}"
+    first_name: "{{ item.name | default(omit) }}"
+    last_name: "{{ item.last | default(omit) }}"
+    email: "{{ item.email | default(omit) }}"
+    password: "{{ item.password }}"
+    roles: "{{ item.roles }}"
+    state: present
