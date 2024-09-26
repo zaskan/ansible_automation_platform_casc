@@ -68,7 +68,7 @@
 
 - name: Create eda users
   infra.eda_configuration.user:
-    username: "{{ item.user }}"
+    username: "{{ item.username }}"
     first_name: "{{ item.name | default(omit) }}"
     last_name: "{{ item.last | default(omit) }}"
     email: "{{ item.email | default(omit) }}"
