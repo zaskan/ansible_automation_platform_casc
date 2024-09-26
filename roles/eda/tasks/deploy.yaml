@@ -75,3 +75,6 @@
     password: "{{ item.password }}"
     roles: "{{ item.roles }}"
     state: present
+  loop: "{{ eda_users }}"
+  when: 
+    - eda_users is defined
