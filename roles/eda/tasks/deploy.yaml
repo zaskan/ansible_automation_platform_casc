@@ -73,7 +73,7 @@
     last_name: "{{ item.last | default(omit) }}"
     email: "{{ item.email | default(omit) }}"
     password: "{{ item.password }}"
-    roles: "{{ item.roles | dict2items }}"
+    roles: "{{ item.roles  }}"
     state: present
   loop: "{{ eda_users }}"
   when: 
