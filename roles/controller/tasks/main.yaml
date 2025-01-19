@@ -7,7 +7,7 @@
     file: deploy.yaml
     apply:
       environment:
-        CONTROLLER_HOST: "{{ controller_host }}"
-        CONTROLLER_USERNAME: "{{ controller_username }}"
-        CONTROLLER_PASSWORD: "{{ controller_password }}"
+        CONTROLLER_HOST: "{{ aap_host }}"
+        CONTROLLER_USERNAME: "{{ aap_username }}"
+        CONTROLLER_PASSWORD: "{{ aap_password }}"
         CONTROLLER_VERIFY_SSL: "false"
