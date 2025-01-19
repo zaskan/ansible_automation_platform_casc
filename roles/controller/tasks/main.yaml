@@ -11,3 +11,7 @@
         CONTROLLER_USERNAME: "{{ aap_username }}"
         CONTROLLER_PASSWORD: "{{ aap_password }}"
         CONTROLLER_VERIFY_SSL: "false"
+        GATEWAY_HOSTNAME: "{{ aap_host }}"
+        GATEWAY_USERNAME: "{{ aap_username }}"
+        GATEWAY_PASSWORD: "{{ aap_password }}"
+        GATEWAY_VERIFY_SSL: "false"
