@@ -9,7 +9,6 @@
     name: "{{ item.name }}"
     description: "{{ item.desc }}"
     state: present
-    galaxy_credentials: "{{ item.galaxy_credentials }}"
   loop: "{{ organizations }}"
   when:
     - organizations is defined
