@@ -2,8 +2,8 @@
   kubernetes.core.k8s_info:
     api_version: route.openshift.io/v1
     kind: Route
-    name: controller01
-    namespace: aap
+    name: "{{ aap_ocp.name }}"
+    namespace: "{{ aap_ocp.namespace }}"
   until:
     - controller.resources[0].spec.host is defined
     - controller.resources[0].spec.host != ""
@@ -15,7 +15,7 @@
   kubernetes.core.k8s_info:
     api_version: v1
     kind: Secret
-    name: controller01-admin-password
+    name: aap-admin-password
     namespace: aap
   register: controller_password
 
