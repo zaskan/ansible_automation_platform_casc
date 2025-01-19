@@ -5,7 +5,7 @@
   loop: "{{ lookup('fileglob', controller_vars_dir, wantlist=True) }}"
 
 - name: Create Organizations
-  ansible.controller.organization:
+  ansible.platform.organization:
     name: "{{ item.name }}"
     description: "{{ item.desc }}"
     state: present
@@ -53,7 +53,7 @@
     - generated_controller_token is defined
 
 - name: Create Teams
-  ansible.controller.team:
+  ansible.platform.team:
     name: "{{ item.name }}"
     description: "{{ item.desc }}"
     organization: "{{ item.org }}"
@@ -63,7 +63,7 @@
     - teams is defined
 
 - name: Create Users
-  ansible.controller.user:
+  ansible.platform.user:
     username: "{{ item.username }}"
     password: "{{ item.password }}"
     email: "{{ item.email }}"
