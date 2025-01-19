@@ -1,3 +1,7 @@
+- name: Get controller username
+  ansible.builtin.set_fact:
+    controller_username: "{{ aap_username }}"
+
 - name: Wait for Ansible Controller Route to be Created
   kubernetes.core.k8s_info:
     api_version: route.openshift.io/v1
