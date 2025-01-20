@@ -269,7 +269,7 @@
       {%- else -%}
       member
       {%- endif -%}
-    organization: "{{ item.organization }}"
+    organization: "{{ item.organizations }}"
     state: present
   loop: "{{ users }}"
   when:
