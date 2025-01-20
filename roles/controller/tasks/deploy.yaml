@@ -271,6 +271,7 @@
       {%- endif -%}
     organization: "{{ item.organizations }}"
     state: present
+    register: users_done
   loop: "{{ users }}"
   when:
     - users is defined
@@ -292,6 +293,5 @@
   loop: "{{ users | subelements('roles') }}"
   loop_control:
     label: "Assigning {{ role_entry.role }} to {{ user.username }} on {{ role_entry | dict2items() | selectattr('value', 'defined') | list | first }} "
-  when:
-    - users is defined
+  when: users_done is defined
 
