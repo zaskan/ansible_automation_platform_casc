@@ -4,8 +4,6 @@
     file: "{{ item }}"
   loop: "{{ lookup('fileglob', eda_vars_dir, wantlist=True) }}"
 
-- debug: msg="{{ generated_controller_token.results[0].ansible_facts.controller_token.token }}"
-
 - name: Create User token
   infra.eda_configuration.user_token:
     name: "{{ item.name }}"
