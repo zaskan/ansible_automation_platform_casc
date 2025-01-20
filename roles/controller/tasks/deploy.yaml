@@ -7,7 +7,7 @@
 
 - name: Print included vars files
   ansible.builtin.debug:
-    msg: "{{ included_files.ansible_included_var_files }}"
+    msg: "{{ included_files }}"
 
 - name: Create Organizations
   ansible.platform.organization:
