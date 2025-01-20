@@ -276,22 +276,22 @@
   when:
     - users is defined
 
-- name: Configure controller access RBAC for users
-  vars:
-    user: "{{ item.0 }}"
-    role_entry: "{{ item.1 }}"
-  ansible.controller.role:
-    user: "{{ user.username }}"
-    role: "{{ role_entry.role }}"
-    organization: "{{ role_entry.organization | default(omit) }}"
-    team: "{{ role_entry.team | default(omit) }}"
-    project: "{{ role_entry.project | default(omit) }}"
-    inventory: "{{ role_entry.inventory | default(omit) }}"
-    credential: "{{ role_entry.credential | default(omit) }}"
-    workflow: "{{ role_entry.workflow | default(omit) }}"
-    job_template: "{{ role_entry.job_template | default(omit) }}"
-  loop: "{{ users | subelements('roles') }}"
-  loop_control:
-    label: "Assigning {{ role_entry.role }} to {{ user.username }} on {{ role_entry | dict2items() | selectattr('value', 'defined') | list | first }} "
-  when: users_done is defined and users_done is changed
+#- name: Configure controller access RBAC for users
+#  vars:
+#    user: "{{ item.0 }}"
+#    role_entry: "{{ item.1 }}"
+#  ansible.controller.role:
+#    user: "{{ user.username }}"
+#    role: "{{ role_entry.role }}"
+#    organization: "{{ role_entry.organization | default(omit) }}"
+#    team: "{{ role_entry.team | default(omit) }}"
+#    project: "{{ role_entry.project | default(omit) }}"
+#    inventory: "{{ role_entry.inventory | default(omit) }}"
+#    credential: "{{ role_entry.credential | default(omit) }}"
+#    workflow: "{{ role_entry.workflow | default(omit) }}"
+#    job_template: "{{ role_entry.job_template | default(omit) }}"
+#  loop: "{{ users | subelements('roles') }}"
+#  loop_control:
+#    label: "Assigning {{ role_entry.role }} to {{ user.username }} on {{ role_entry | dict2items() | selectattr('value', 'defined') | list | first }} "
+#  when: users_done is defined and users_done is changed
 
