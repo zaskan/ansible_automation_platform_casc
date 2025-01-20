@@ -291,7 +291,7 @@
     job_template: "{{ role_entry.job_template | default(omit) }}"
   loop: "{{ users | subelements('roles') }}"
   loop_control:
-    label: "Assigning {{ role_entry.role }} to {{ user.username }} on {{ role_entry | dict2items() | selectattr('value', 'defined') | list | first }}"
+    label: "Assigning {{ role_entry.role }} to {{ user.username }} on {{ role_entry | dict2items() | selectattr('value', 'defined') | list | first }} "
   when:
     - users is defined
 
