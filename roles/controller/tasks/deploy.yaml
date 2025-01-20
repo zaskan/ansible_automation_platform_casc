@@ -3,6 +3,11 @@
   ansible.builtin.include_vars:
     file: "{{ item }}"
   loop: "{{ lookup('fileglob', controller_vars_dir, wantlist=True) }}"
+  register: included_files
+
+- name: Print included vars files
+  ansible.builtin.debug:
+    msg: "{{ included_files.ansible_included_var_files }}"
 
 - name: Create Organizations
   ansible.platform.organization:
