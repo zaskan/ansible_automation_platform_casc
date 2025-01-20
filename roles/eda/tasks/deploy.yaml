@@ -1,8 +1,18 @@
 ---
+- name: Get variables files
+  ansible.builtin.find:
+    paths: "{{ eda_vars_dir }}"
+  register: variable_files
+
 - name: Include EDA variables
   ansible.builtin.include_vars:
-    file: "{{ item }}"
-  loop: "{{ lookup('fileglob', eda_vars_dir, wantlist=True) }}"
+    file: "{{ item.path }}"
+  loop: "{{ variable_files.files }}"
+  register: included_files
+
+- name: Print included vars files
+  ansible.builtin.debug:
+    msg: "{{ included_files }}"
 
 - name: Create User token
   infra.eda_configuration.user_token:
