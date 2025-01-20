@@ -1,8 +1,13 @@
 ---
+- name: Get variables files
+  ansible.builtin.find:
+    paths: "{{ controller_vars_dir }}"
+  register: variable_files
+
 - name: Include controller variables
   ansible.builtin.include_vars:
-    file: "{{ item }}"
-  loop: "{{ lookup('fileglob', controller_vars_dir, wantlist=True) }}"
+    file: "{{ item.path }}"
+  loop: "{{ variable_files.files }}"
   register: included_files
 
 - name: Print included vars files
