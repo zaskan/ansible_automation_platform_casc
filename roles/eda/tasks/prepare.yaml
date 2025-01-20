@@ -1,15 +1,15 @@
-- name: Wait for Ansible Controller Route to be Created
+- name: Wait for EDA Route to be Created
   kubernetes.core.k8s_info:
     api_version: route.openshift.io/v1
     kind: Route
     name: "{{ aap_ocp.name }}"
     namespace: "{{ aap_ocp.namespace }}"
   until:
-    - controller.resources[0].spec.host is defined
-    - controller.resources[0].spec.host != ""
+    - eda.resources[0].spec.host is defined
+    - eda.resources[0].spec.host != ""
   retries: 60
   delay: 10
-  register: controller
+  register: eda
 
 - name: Get EDA password
   kubernetes.core.k8s_info:
