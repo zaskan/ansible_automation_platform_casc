@@ -293,5 +293,5 @@
   loop: "{{ users | subelements('roles') }}"
   loop_control:
     label: "Assigning {{ role_entry.role }} to {{ user.username }} on {{ role_entry | dict2items() | selectattr('value', 'defined') | list | first }} "
-  when: users_done is defined
+  when: users_done is defined and users_done is changed
 
