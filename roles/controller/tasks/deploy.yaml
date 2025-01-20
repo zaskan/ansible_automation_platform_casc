@@ -68,7 +68,7 @@
     email: "{{ item.email }}"
     update_secrets: "{{ item.update_secrets }}"
     superuser: "{{ item.superuser }}"
-    organizations: "{{ item.organization }}"
+    organizations: "{{ item.organizations }}"
     state: present
   loop: "{{ users }}"
   when:
