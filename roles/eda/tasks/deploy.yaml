@@ -14,6 +14,18 @@
   ansible.builtin.debug:
     msg: "{{ included_files }}"
 
+- name: Create an EDA Credential
+  ansible.eda.credential:
+    name: "item.name"
+    description: "item.description"
+    inputs: "{{ item.inputs }}"
+    credential_type_name: "item.type"
+    organization_name: "{{ org | default('Default') }}"
+    state: present
+  loop: "{{ eda_credentials }}"
+  when:
+    - eda_credentials is defined
+
 - name: Create User token
   ansible.eda.controller_token:
     name: "{{ item.name }}"
