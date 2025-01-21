@@ -32,7 +32,7 @@
       username: "{{ item.username }}"
       secret: "{{ item.secret }}"
     credential_type_name: "{{ item.credential_type }}"
-    organization_name: "{{ org | default(omit) }}"
+    organization_name: "{{ org | default('Default') }}"
     state: present
   loop: "{{ eda_credentials }}"
   when:
@@ -45,7 +45,7 @@
     image_url: "{{ item.image_url }}"
     credential: "{{ item.credential | default(omit) }}"
     state: present
-    organization_name: "{{ org | default(omit) }}" 
+    organization_name: "{{ org | default('Default') }}"
   loop: "{{ decision_environments }}"
   when:
     - decision_environments is defined
@@ -56,7 +56,7 @@
     description: "{{ item.description }}"
     url: "{{ item.url }}"
     state: present
-    organization_name: "{{ org | default(omit) }}"
+    organization_name: "{{ org | default('Default') }}"
   loop: "{{ eda_projects }}"
   register: project_status
   when:
@@ -75,6 +75,7 @@
     awx_token_name: "{{ item.awx_token }}"
     state: present
     restart_policy: always
+    organization_name: "{{ org | default('Default') }}"
   loop: "{{ activations }}"
   when:
     - activations is defined
