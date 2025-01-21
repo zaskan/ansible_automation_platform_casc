@@ -19,7 +19,7 @@
     name: "item.name"
     description: "item.description"
     inputs: "{{ item.inputs }}"
-    credential_type_name: "item.type"
+    credential_type_name: "{{ item.type }}"
     organization_name: "{{ org | default('Default') }}"
     state: present
   loop: "{{ eda_credentials }}"
