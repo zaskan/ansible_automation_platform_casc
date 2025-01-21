@@ -88,6 +88,7 @@
     state: present
     restart_policy: always
     organization_name: "{{ org | default('Default') }}"
+    eda_credentials: "{{ item.credential }}"
   loop: "{{ activations }}"
   when:
     - activations is defined
