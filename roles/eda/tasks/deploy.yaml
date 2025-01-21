@@ -22,6 +22,7 @@
     credential_type_name: "{{ item.type }}"
     organization_name: "{{ org | default('Default') }}"
     state: present
+    validate_certs: false
   loop: "{{ eda_credentials }}"
   when:
     - eda_credentials is defined
@@ -32,6 +33,7 @@
     description: "{{ item.description }}"
     token: "{{ generated_controller_token.results[0].ansible_facts.controller_token.token }}"
     state: present
+    validate_certs: false
   loop: "{{ eda_tokens }}"
   when:
     - eda_tokens is defined
@@ -41,11 +43,13 @@
     name: "{{ item.name }}"
     description: "{{ item.description }}"
     inputs:
-      username: "{{ item.username }}"
-      secret: "{{ item.secret }}"
+      host: "{{ item.host }}"
+      username: "{{ item.inputs.username }}"
+      password: "{{ item.secret }}"
     credential_type_name: "{{ item.credential_type }}"
     organization_name: "{{ org | default('Default') }}"
     state: present
+    validate_certs: false
   loop: "{{ eda_credentials }}"
   when:
     - eda_credentials is defined
@@ -58,6 +62,7 @@
     credential: "{{ item.credential | default(omit) }}"
     state: present
     organization_name: "{{ org | default('Default') }}"
+    validate_certs: false
   loop: "{{ decision_environments }}"
   when:
     - decision_environments is defined
@@ -69,6 +74,7 @@
     url: "{{ item.url }}"
     state: present
     organization_name: "{{ org | default('Default') }}"
+    validate_certs: false
   loop: "{{ eda_projects }}"
   register: project_status
   when:
@@ -89,6 +95,7 @@
     restart_policy: always
     organization_name: "{{ org | default('Default') }}"
     eda_credentials: "{{ item.credential }}"
+    validate_certs: false
   loop: "{{ activations }}"
   when:
     - activations is defined
@@ -102,6 +109,7 @@
     password: "{{ item.password }}"
     roles: "{{ item.roles  }}"
     state: present
+    validate_certs: false
   loop: "{{ eda_users }}"
   when: 
     - eda_users is defined
