@@ -46,7 +46,7 @@
       host: "{{ item.inputs.host }}"
       username: "{{ item.inputs.username }}"
       password: "{{ item.inputs.password }}"
-    credential_type_name: "{{ item.credential_type }}"
+    credential_type_name: "{{ item.type }}"
     organization_name: "{{ org | default('Default') }}"
     state: present
     validate_certs: false
