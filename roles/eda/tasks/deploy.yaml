@@ -45,7 +45,7 @@
     inputs:
       host: "{{ item.inputs.host }}"
       username: "{{ item.inputs.username }}"
-      password: "{{ item.inputs.secret }}"
+      password: "{{ item.inputs.password }}"
     credential_type_name: "{{ item.credential_type }}"
     organization_name: "{{ org | default('Default') }}"
     state: present
