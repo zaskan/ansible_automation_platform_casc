@@ -21,6 +21,14 @@
     pool_id: "{{ lookup('community.general.bitwarden_secrets_manager', '4d4c5bf5-a9eb-4832-8a45-b26c01291c55').value }}"
     validate_certs: false
 
+- name: Configure Project Standard Settings
+  ansible.controller.settings:
+    settings: 
+      AWX_TASK_ENV:
+        HOME: "/var/lib/awx"
+        GIT_SSL_NO_VERIFY: 'true'
+    validate_certs: false
+
 - name: Create Organizations
   ansible.platform.organization:
     name: "{{ item.name }}"
