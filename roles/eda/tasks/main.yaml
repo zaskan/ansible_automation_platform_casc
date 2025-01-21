@@ -7,7 +7,7 @@
     file: deploy.yaml
     apply:
       environment:
-        EDA_HOST: "{{ aap_host }}"
-        EDA_USERNAME: "{{ aap_username }}"
-        EDA_PASSWORD: "{{ aap_password }}"
+        CONTROLLER_HOST: "{{ aap_host }}"
+        CONTROLLER_USERNAME: "{{ aap_username }}"
+        CONTROLLER_PASSWORD: "{{ aap_password }}"
         EDA_VERIFY_SSL: "false"
