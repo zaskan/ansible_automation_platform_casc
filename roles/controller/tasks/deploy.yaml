@@ -14,16 +14,19 @@
   ansible.controller.subscriptions:
     username: "{{ lookup('community.general.bitwarden_secrets_manager', '21d8d4ff-9191-402c-813a-b26c012837f3').value }}"
     password: "{{ lookup('community.general.bitwarden_secrets_manager', '69b6ba85-0169-4c30-b524-b26c01285afd').value }}"
+    validate_certs: false
 
 - name: Attach pool
   ansible.controller.license:
     pool_id: "{{ lookup('community.general.bitwarden_secrets_manager', '4d4c5bf5-a9eb-4832-8a45-b26c01291c55').value }}"
+    validate_certs: false
 
 - name: Create Organizations
   ansible.platform.organization:
     name: "{{ item.name }}"
     description: "{{ item.desc }}"
     state: present
+    validate_certs: false
   loop: "{{ organizations }}"
   when:
     - organizations is defined
@@ -45,6 +48,7 @@
     state: present
     authorization_grant_type: "{{ item.auth_grant_type }}"
     client_type: "{{ item.client_type }}"
+    validate_certs: false
   loop: "{{ applications }}"
   when:
     - applications is defined
@@ -55,6 +59,7 @@
     scope: "{{ item.scope }}"
     state: present
     application: "{{ item.application }}"
+    validate_certs: false
   register: generated_controller_token
   loop: "{{ controller_tokens }}"
   when:
@@ -72,6 +77,7 @@
     description: "{{ item.desc }}"
     organization: "{{ item.org }}"
     state: present
+    validate_certs: false
   loop: "{{ teams }}"
   when:
     - teams is defined
@@ -85,6 +91,7 @@
     superuser: "{{ item.superuser }}"
     organizations: "{{ item.organizations }}"
     state: absent
+    validate_certs: false
   loop: "{{ users }}"
   when:
     - users is defined
@@ -98,6 +105,7 @@
     superuser: "{{ item.superuser }}"
     organizations: "{{ item.organizations }}"
     state: present
+    validate_certs: false
   loop: "{{ users }}"
   when:
     - users is defined
@@ -109,6 +117,7 @@
     inputs: "{{ item.inputs }}"
     injectors: "{{ item.injectors }}"
     state: present
+    validate_certs: false
   loop: "{{ custom_credential_types }}"
   when:
     - custom_credential_types is defined
@@ -122,6 +131,7 @@
     update_secrets: true
     inputs: "{{ item.inputs }}"
     state: present
+    validate_certs: false
   loop: "{{ controller_credentials }}"
   when:
     - controller_credentials is defined
@@ -133,6 +143,7 @@
     organization: "{{ item.org }}"
     state: present
     variables: "{{ item.vars | default('{}') }}"
+    validate_certs: false
   loop: "{{ inventories }}"
   when:
     - inventories is defined
@@ -148,6 +159,7 @@
     source_path: "{{ item.source_path }}"
     source_project: "{{ item.project }}"
     credential: "{{ item.credential }}"
+    validate_certs: false
   loop: "{{ inventory_sources }}"
   when:
     - inventory_sources is defined
@@ -160,6 +172,7 @@
     variables: "{{ item.vars }}"
     enabled: true
     state: present
+    validate_certs: false
   loop: "{{ inventory_hosts }}"
   when:
     - inventory_hosts is defined
@@ -169,6 +182,7 @@
     name: "{{ item.name }}"
     image: "{{ item.desc }}"
     state: present
+    validate_certs: false
   loop: "{{ execution_enviroments }}"
   when:
     - execution_enviroments is defined
@@ -179,6 +193,7 @@
     description: "{{ item.desc }}"
     state: present
     galaxy_credentials: "{{ item.creds | default(omit) }}"
+    validate_certs: false
   loop: "{{ organizations }}"
   when:
     - organizations is defined
@@ -197,6 +212,7 @@
     scm_url: "{{ item.git_url }}"
     state: present
     update_project: true
+    validate_certs: false
     wait: true
   loop: "{{ controller_projects }}"
   when:
@@ -214,6 +230,7 @@
     source_project: "{{ item.project | default(omit) }}"
     source_vars: "{{ item.vars | default(omit) }}"
     credential: "{{ item.credential | default(omit) }}"
+    validate_certs: false
   loop: "{{ inventory_sources }}"
   when:
     - inventory_sources is defined
@@ -236,6 +253,7 @@
     survey_enabled: "{{ item.survey_enabled | default(omit) }}"
     survey_spec: "{{ item.survey_spec | default(omit) }}"
     limit: "{{ item.limit | default(omit) }}"
+    validate_certs: false
     state: present
   loop: "{{ jobtemplates }}"
   when:
@@ -255,6 +273,7 @@
     survey_spec: "{{ item.survey_spec | default(omit) }}"
     extra_vars: "{{ item.extra_vars | default(omit) }}"
     state: present
+    validate_certs: false
   loop: "{{ workflowjobtemplates }}"
   when:
     - workflowjobtemplates is defined
@@ -276,7 +295,8 @@
       {%- endif -%}
     organization: "{{ item.organizations }}"
     state: present
-    register: users_done
+    validate_certs: false
+  register: users_done
   loop: "{{ users }}"
   when:
     - users is defined
