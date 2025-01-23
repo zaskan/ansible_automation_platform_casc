@@ -17,7 +17,6 @@
 - name: Create Custom Credential Types
   ansible.eda.credential_type:
     name: "{{ item.name }}"
-    kind: "{{ item.kind }}"
     inputs: "{{ item.inputs }}"
     injectors: "{{ item.injectors }}"
     state: present
