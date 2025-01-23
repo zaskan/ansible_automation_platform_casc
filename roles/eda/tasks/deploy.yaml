@@ -49,22 +49,6 @@
   when:
     - eda_tokens is defined
 
-- name: Create Container Registry Credential
-  ansible.eda.credential:
-    name: "{{ item.name }}"
-    description: "{{ item.description }}"
-    inputs:
-      host: "{{ item.inputs.host }}"
-      username: "{{ item.inputs.username }}"
-      password: "{{ item.inputs.password }}"
-    credential_type_name: "{{ item.type }}"
-    organization_name: "{{ org | default('Default') }}"
-    state: present
-    validate_certs: false
-  loop: "{{ eda_credentials }}"
-  when:
-    - eda_credentials is defined
-
 - name: Create Decision Environments
   ansible.eda.decision_environment:
     name: "{{ item.name }}"
