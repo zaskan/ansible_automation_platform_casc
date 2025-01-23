@@ -27,8 +27,8 @@
 
 - name: Create an EDA Credential
   ansible.eda.credential:
-    name: "item.name"
-    description: "item.description"
+    name: "{{ item.name }}"
+    description: "{{ item.description }}"
     inputs: "{{ item.inputs }}"
     credential_type_name: "{{ item.type }}"
     organization_name: "{{ org | default('Default') }}"
