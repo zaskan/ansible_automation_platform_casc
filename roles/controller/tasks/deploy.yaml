@@ -77,8 +77,8 @@
   ansible.builtin.set_fact:
     application_token: "{{ generated_controller_token.results.0.ansible_facts.controller_token.token }}"
   when: 
-    - generated_controller_token is defined
-
+    - controller_tokens is defined
+    
 - name: Create Teams
   ansible.platform.team:
     name: "{{ item.name }}"
