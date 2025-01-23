@@ -54,7 +54,7 @@
     name: "{{ item.name }}"
     description: "{{ item.description }}"
     image_url: "{{ item.image_url }}"
-    credential: "{{ item.credential | default(omit) }}"
+    credential: "{{ item.credential }}"
     state: present
     organization_name: "{{ org | default('Default') }}"
     validate_certs: false
