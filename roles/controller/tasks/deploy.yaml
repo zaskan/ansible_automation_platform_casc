@@ -90,20 +90,6 @@
   when:
     - teams is defined
 
-- name: Remove Users (Workaround to fix the idempotency of this module in 2.5)
-  ansible.platform.user:
-    username: "{{ item.username }}"
-    password: "{{ item.password }}"
-    email: "{{ item.email }}"
-    update_secrets: "{{ item.update_secrets }}"
-    superuser: "{{ item.superuser }}"
-    organizations: "{{ item.organizations }}"
-    state: absent
-    validate_certs: false
-  loop: "{{ users }}"
-  when:
-    - users is defined
-
 - name: Create Users
   ansible.platform.user:
     username: "{{ item.username }}"
@@ -117,6 +103,7 @@
   loop: "{{ users }}"
   when:
     - users is defined
+  ignore_errors: true
 
 - name: Create Custom Credential Types
   ansible.controller.credential_type:
