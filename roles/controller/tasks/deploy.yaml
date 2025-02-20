@@ -273,28 +273,28 @@
   when:
     - workflowjobtemplates is defined
 
-- name: Configure controller access RBAC for users
-  ansible.controller.role:
-    user: "{{ item.username }}"
-    role: >-
-      {%- if item.superuser == false and item.auditor == false -%}
-      member
-      {%- elif item.superuser == true and item.auditor == false -%}
-      admin
-      {%- elif item.superuser == true and item.auditor == true -%}
-      admin
-      {%- elif item.superuser == false and item.auditor == true -%}
-      auditor
-      {%- else -%}
-      member
-      {%- endif -%}
-    organization: "{{ item.organizations }}"
-    state: present
-    validate_certs: false
-  register: users_done
-  loop: "{{ users }}"
-  when:
-    - users is defined
+#- name: Configure controller access RBAC for users
+#  ansible.controller.role:
+#    user: "{{ item.username }}"
+#    role: >-
+#      {%- if item.superuser == false and item.auditor == false -%}
+#      member
+#      {%- elif item.superuser == true and item.auditor == false -%}
+#      admin
+#      {%- elif item.superuser == true and item.auditor == true -%}
+#      admin
+#      {%- elif item.superuser == false and item.auditor == true -%}
+#      auditor
+#      {%- else -%}
+#      member
+#      {%- endif -%}
+#    organization: "{{ item.organizations }}"
+#    state: present
+#    validate_certs: false
+#  register: users_done
+#  loop: "{{ users }}"
+#  when:
+#    - users is defined
 
 #- name: Configure controller access RBAC for users
 #  vars:
